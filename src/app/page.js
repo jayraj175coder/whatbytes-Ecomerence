@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import Header from "./components/Header.jsx"
-import Sidebar from "./components/Sidebar.jsx"
+import SideBar from "./components/SideBar.jsx"
 import ProductGrid from "./components/ProductGrid.jsx"
 import Footer from "./components/Footer.jsx"
 import { products } from "./data/products.js"
@@ -111,7 +111,7 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <aside className="lg:sticky lg:top-24 lg:h-fit">
-            <Sidebar
+            <SideBar
               selectedCategories={selectedCategories}
               onCategoryChange={handleCategoryChange}
               priceRange={priceRange}

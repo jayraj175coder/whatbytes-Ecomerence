@@ -4,7 +4,7 @@ import { useState, useCallback } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { categories, brands } from "../data/products.js"
 
-export default function Sidebar({
+export default function SideBar({
   selectedCategories,
   onCategoryChange,
   priceRange,
