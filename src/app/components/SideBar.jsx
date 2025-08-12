@@ -5,12 +5,13 @@ import { ChevronDown, ChevronUp } from "lucide-react"
 import { categories, brands } from "../data/products.js"
 
 export default function SideBar({
-  selectedCategories,
-  onCategoryChange,
-  priceRange,
-  onPriceRangeChange,
-  selectedBrands,
-  onBrandChange,
+  selectedCategories = [],
+  onCategoryChange = () => {},
+  priceRange = [0, 200],
+  onPriceRangeChange = () => {},
+  selectedBrands = [],
+  onBrandChange = () => {},
+  onClearAllFilters,
 }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true)
   const [isPriceOpen, setIsPriceOpen] = useState(true)
@@ -30,24 +31,20 @@ export default function SideBar({
 
   const handleCategoryChange = useCallback(
     (categoryId, checked) => {
-      if (checked) {
-        onCategoryChange([...selectedCategories, categoryId])
-      } else {
-        onCategoryChange(selectedCategories.filter((c) => c !== categoryId))
-      }
+      // Just pass the category ID to the parent component
+      // The parent will handle the actual state update
+      onCategoryChange(categoryId);
     },
-    [selectedCategories, onCategoryChange],
+    [onCategoryChange],
   )
 
   const handleBrandChange = useCallback(
-    (brand, checked) => {
-      if (checked) {
-        onBrandChange([...selectedBrands, brand])
-      } else {
-        onBrandChange(selectedBrands.filter((b) => b !== brand))
-      }
+    (brand) => {
+      // Just pass the brand to the parent component
+      // The parent will handle the actual state update
+      onBrandChange(brand);
     },
-    [selectedBrands, onBrandChange],
+    [onBrandChange],
   )
 
   const handlePriceChange = useCallback(
@@ -57,11 +54,16 @@ export default function SideBar({
     [priceRange, onPriceRangeChange],
   )
 
-  const clearAllFilters = useCallback(() => {
-    onCategoryChange([])
-    onPriceRangeChange([0, 200])
-    onBrandChange([])
-  }, [onCategoryChange, onPriceRangeChange, onBrandChange])
+  const handleClearAllFilters = useCallback(() => {
+    // Call the parent's clearAllFilters if provided, otherwise use individual handlers
+    if (onClearAllFilters) {
+      onClearAllFilters();
+    } else {
+      onCategoryChange([]);
+      onPriceRangeChange([0, 200]);
+      onBrandChange([]);
+    }
+  }, [onCategoryChange, onPriceRangeChange, onBrandChange, onClearAllFilters])
 
   return (
     <div className="w-full lg:w-64 bg-white p-6 rounded-lg shadow-sm border h-fit">
@@ -86,9 +88,13 @@ export default function SideBar({
               >
                 <input
                   type="checkbox"
-                  checked={selectedCategories.includes(category.id)}
-                  onChange={(e) => handleCategoryChange(category.id, e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  checked={selectedCategories.some(cat => String(cat) === String(category.id))}
+                  onChange={() => {
+                    // Toggle the category selection
+                    handleCategoryChange(category.id);
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
                 <span className="text-sm text-gray-700">
                   {category.name} ({category.count})
@@ -145,9 +151,10 @@ export default function SideBar({
               <label key={brand} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
                 <input
                   type="checkbox"
-                  checked={selectedBrands.includes(brand)}
-                  onChange={(e) => handleBrandChange(brand, e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  checked={selectedBrands.some(b => String(b) === String(brand))}
+                  onChange={() => handleBrandChange(brand)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
                 <span className="text-sm text-gray-700">{brand}</span>
               </label>
@@ -158,7 +165,7 @@ export default function SideBar({
 
       {/* Clear Filters */}
       <button
-        onClick={clearAllFilters}
+        onClick={handleClearAllFilters}
         className="w-full py-2 px-4 text-sm text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
       >
         Clear All Filters
