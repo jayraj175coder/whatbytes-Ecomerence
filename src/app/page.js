@@ -1,21 +1,9 @@
-"use client"
+import { Suspense } from 'react'
+import HomeContent from './HomeContent'
 
-import { useState, useEffect, useMemo, useCallback } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
-import Header from "./components/Header.jsx"
-import SideBar from "./components/SideBar.jsx"
-import ProductGrid from "./components/ProductGrid.jsx"
-import Footer from "./components/Footer.jsx"
-import { products } from "./data/products.js"
+export const dynamic = 'force-dynamic'
 
 export default function Home() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategories, setSelectedCategories] = useState([])
-  const [priceRange, setPriceRange] = useState([0, 200])
-  const [selectedBrands, setSelectedBrands] = useState([])
 
   // Initialize filters from URL params
   useEffect(() => {
@@ -104,35 +92,12 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center justify-between">
-      <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-
-      <main className="container py-8 px-2">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <aside className="lg:sticky lg:top-24 lg:h-fit">
-            <SideBar
-              selectedCategories={selectedCategories}
-              onCategoryChange={handleCategoryChange}
-              priceRange={priceRange}
-              onPriceRangeChange={handlePriceRangeChange}
-              selectedBrands={selectedBrands}
-              onBrandChange={handleBrandChange}
-            />
-          </aside>
-
-          {/* Main Content */}
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-2xl font-bold text-gray-900">Products ({filteredProducts.length})</h1>
-            </div>
-
-            <ProductGrid products={filteredProducts} />
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   )
 }

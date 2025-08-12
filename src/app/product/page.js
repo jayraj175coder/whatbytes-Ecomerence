@@ -5,10 +5,10 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Star, Plus, Minus, ShoppingCart, Heart } from "lucide-react"
-import { products } from "../../data/products.js"
-import { useCart } from "../../context/CartContext.jsx"
-import Header from "../../components/Header.jsx"
-import Footer from "../../components/Footer.jsx"
+import { products } from "@/app/data/products"
+import { useCart } from "@/app/context/CartContext"
+import Header from "@/app/components/Header"
+import Footer from "@/app/components/Footer"
 
 export default function ProductDetail() {
   const params = useParams()
