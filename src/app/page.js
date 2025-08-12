@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-// import Header from "./components/Header.jsx"
-// import Sidebar from "./components/Sidebar.jsx"
-// import ProductGrid from "./components/ProductGrid.jsx"
-// import Footer from "./components/Footer.jsx"
-// import { products } from "./data/products.js"
+import Header from "./components/Header.jsx"
+import Sidebar from "./components/Sidebar.jsx"
+import ProductGrid from "./components/ProductGrid.jsx"
+import Footer from "./components/Footer.jsx"
+import { products } from "./data/products.js"
 
 export default function Home() {
   const searchParams = useSearchParams()
