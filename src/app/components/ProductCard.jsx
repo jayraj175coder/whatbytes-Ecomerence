@@ -4,7 +4,7 @@ import { useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Star, ShoppingCart } from "lucide-react"
-import { useCart } from "../context/CartContext.js"
+import { useCart } from "../context/CartContext.jsx"
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart()
