@@ -31,9 +31,9 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">WB</span>
+                <span className="text-white font-bold text-sm">EC</span>
               </div>
-              <span className="text-xl font-bold">WhatBytes</span>
+              <span className="text-xl font-bold">Ecomerence</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Your trusted e-commerce destination for quality products at great prices. We're committed to providing
