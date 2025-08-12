@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useCallback , useState} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Trash2, Plus, Minus, ArrowLeft } from "lucide-react"
 import { useCart } from "../context/CartContext.jsx"
-import Header from "../components/Header.jsx"
 import Footer from "../components/Footer.jsx"
 
 export default function Cart() {
@@ -39,8 +38,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="w-full flex flex-col items-center justify-between min-h-screen bg-gray-50">
-        <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-        <main className="container py-16 px-2">
+        <main className="container py-16 px-2 flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-gray-400 mb-4">
               <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,11 +68,9 @@ export default function Cart() {
 
   return (
     <div className="w-full flex flex-col items-center justify-between min-h-screen bg-gray-50 p-2">
-      <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-
-      <main className="container py-8">
+      <main className="container py-8 w-full">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Shopping Cart ({totalItems} {totalItems === 1 ? 'item' : 'items'})</h1>
           <Link href="/" className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Continue Shopping</span>

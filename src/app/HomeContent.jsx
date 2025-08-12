@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import Header from "./components/Header"
 import SideBar from "./components/SideBar"
 import ProductGrid from "./components/ProductGrid"
 import { products } from "./data/products"
@@ -203,8 +202,7 @@ function HomeContent() {
   return (
     <ErrorBoundary>
       <div className="flex flex-col min-h-screen">
-        <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="flex-1 container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row gap-8">
             <SideBar
               selectedCategories={selectedCategories}
@@ -217,7 +215,7 @@ function HomeContent() {
             />
             <ProductGrid products={filteredProducts} />
           </div>
-        </main>
+        </div>
       </div>
     </ErrorBoundary>
   )
